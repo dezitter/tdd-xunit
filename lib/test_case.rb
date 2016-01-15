@@ -16,7 +16,11 @@ class TestCase
     result.test_started()
 
     setup
-    send(@name)
+    begin
+      send(@name)
+    rescue Exception
+      result.test_failed()
+    end
     teardown
 
     result

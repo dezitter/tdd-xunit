@@ -5,4 +5,5 @@
 * [ ] Run multiple tests
 * [x] Report collected results
 * [x] Log array in WasRun
-* [ ] Report failed tests
+* [x] Report failed tests
+* [ ] Catch and report setup errors
