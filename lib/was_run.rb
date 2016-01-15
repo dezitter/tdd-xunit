@@ -1,15 +1,18 @@
 require 'test_case'
 
 class WasRun < TestCase
-  attr_reader :wasRun, :wasSetUp
+  attr_reader :log
 
   def setup
-    @wasRun = false
-    @wasSetUp = true
+    @log = [:setup]
   end
 
   def test_method
-    @wasRun = true
+    @log << :run
+  end
+
+  def teardown
+    @log << :teardown
   end
 
 end

@@ -13,6 +13,10 @@ class TestCase
   def run
     setup
     send(@name)
+    teardown
+  end
+
+  def teardown
   end
 
 end
