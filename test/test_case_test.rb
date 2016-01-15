@@ -1,24 +1,29 @@
 require 'test_case'
+require 'test_suite'
 require 'was_run'
 
 class TestCaseTest < TestCase
 
+  def setup
+    @result = TestResult.new
+  end
+
   def test_template_method
     test = WasRun.new("test_method")
-    test.run()
+    test.run(@result)
     assert { [:setup, :run, :teardown] == test.log }
   end
 
   def test_result
     test = WasRun.new("test_method")
-    result = test.run()
-    assert { "1 run, 0 failed" == result.summary }
+    test.run(@result)
+    assert { "1 run, 0 failed" == @result.summary }
   end
 
   def test_failed_result
     test = WasRun.new("test_broken_method")
-    result = test.run()
-    assert { "1 run, 1 failed" == result.summary }
+    test.run(@result)
+    assert { "1 run, 1 failed" == @result.summary }
   end
 
   def test_failed_result_formatting
@@ -28,9 +33,25 @@ class TestCaseTest < TestCase
     assert { "1 run, 1 failed" == result.summary }
   end
 
+  def test_suite
+    suite = TestSuite.new
+    suite << WasRun.new("test_method")
+    suite << WasRun.new("test_broken_method")
+    result = TestResult.new
+    suite.run(result)
+    assert { "2 run, 1 failed" == result.summary }
+  end
+
 end
 
-puts TestCaseTest.new('test_template_method').run.summary
-puts TestCaseTest.new('test_result').run.summary
-puts TestCaseTest.new('test_failed_result').run.summary
-puts TestCaseTest.new('test_failed_result_formatting').run.summary
+suite = TestSuite.new
+result = TestResult.new
+
+suite << TestCaseTest.new('test_template_method')
+suite << TestCaseTest.new('test_result')
+suite << TestCaseTest.new('test_failed_result')
+suite << TestCaseTest.new('test_failed_result_formatting')
+suite << TestCaseTest.new('test_suite')
+
+suite.run(result)
+puts result.summary
