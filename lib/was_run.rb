@@ -11,6 +11,10 @@ class WasRun < TestCase
     @log << :run
   end
 
+  def test_broken_method
+    raise Exception
+  end
+
   def teardown
     @log << :teardown
   end
