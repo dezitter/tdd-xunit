@@ -30,7 +30,7 @@ class TestCaseTest < TestCase
 
 end
 
-TestCaseTest.new('test_template_method').run
-TestCaseTest.new('test_result').run
-TestCaseTest.new('test_failed_result').run
-TestCaseTest.new('test_failed_result_formatting').run
+puts TestCaseTest.new('test_template_method').run.summary
+puts TestCaseTest.new('test_result').run.summary
+puts TestCaseTest.new('test_failed_result').run.summary
+puts TestCaseTest.new('test_failed_result_formatting').run.summary
